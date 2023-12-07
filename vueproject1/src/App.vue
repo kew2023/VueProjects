@@ -1,48 +1,34 @@
 <template>
-  <div class="post">
-    <button @click="inc">Лайк</button>
-    <button @click="decr">Дизлайк</button>
-    <div>
-      <p>Кол-во лайков <strong>{{ likes }}</strong></p>
-      <p>Кол-во дизлайков <strong>{{ dislikes }}</strong></p>
-    </div>
-  </div>
-
-  <div class="post">
-    <button @click="inc">Лайк</button>
-    <button @click="decr">Дизлайк</button>
-    <div>
-      <p>Кол-во лайков <strong>{{ likes }}</strong></p>
-      <p>Кол-во дизлайков <strong>{{ dislikes }}</strong></p>
-    </div>
-  </div>
-
-  <div class="post">
-    <button @click="inc">Лайк</button>
-    <button @click="decr">Дизлайк</button>
-    <div>
-      <p>Кол-во лайков <strong>{{ likes }}</strong></p>
-      <p>Кол-во дизлайков <strong>{{ dislikes }}</strong></p>
-    </div>
+  <div class="app">
+    <PostForm @create="createPost"></PostForm>
+    <PostList v-bind:posts="posts" @remove="removePost"></PostList>
   </div>
 </template>
 
+
 <script>
+import PostForm from './components/PostForm.vue';
+import PostList from './components/PostList.vue';
+
 export default {
   data () {
     return {
-      likes: 0,
-      dislikes: 0,
+      posts: [
+        { id: 1, title: 'JS', discription: 'Описание поста' },
+        { id: 2, title: 'Python', discription: 'Описание поста 1' },
+        { id: 3, title: 'C++', discription: 'Описание поста 2' }
+      ],
     };
   },
   methods: {
-    inc () {
-      this.likes += 1;
+    createPost (post) {
+      this.posts.push(post);
     },
-    decr () {
-      this.dislikes += 1;
+    removePost (removedPost) {
+      this.posts = this.posts.filter((post) => { return post.id !== removedPost.id; });
     }
-  }
+  },
+  components: { PostForm, PostList }
 };
 </script>
 
@@ -51,16 +37,5 @@ export default {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
-}
-
-.post {
-  padding: 5px;
-  border: 2px solid teal;
-  border-radius: 10px;
-  margin-top: 10px;
-}
-
-button {
-  margin: 0 5px;
 }
 </style>
