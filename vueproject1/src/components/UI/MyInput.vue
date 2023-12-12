@@ -1,6 +1,7 @@
 <template>
     <input :value="value" @input="UpdateInput" class="input" type="text">
 </template>
+
 <script>
 export default {
     name: 'MyInput',
@@ -14,6 +15,7 @@ export default {
     }
 };
 </script>
+
 <style scoped>
 .input {
     width: auto;
