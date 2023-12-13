@@ -22,7 +22,10 @@ export default {
   },
   methods: {
     createPost (post) {
-      this.posts.push(post);
+      if (post.title.replaceAll(' ', '')) {
+        post.title = post.title.split(' ').map((e) => e[0].toUpperCase() + e.slice(1)).join();
+        this.posts.push(post);
+      }
     },
     removePost (removedPost) {
       this.posts = this.posts.filter((post) => { return post.id !== removedPost.id; });
