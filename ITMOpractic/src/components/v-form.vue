@@ -1,12 +1,12 @@
 <template>
-    <section class="form">
+    <section class="form" ref="form" id="form">
         <div class="content__container">
             <div class="form__left">
                 <div class="form__text">
-                    Остались вопросы? <br>
-                    Напишите нам и мы ответим на все!
+                    Не хочешь идти? <br>
+                    Доставим!
                 </div>
-                <img class="form__img" src="@/assets/formimg.png">
+                <img class="form__img" src="@/assets/woman_right.png">
             </div>
             <div class="form__right">
                 <div class="form__item">
@@ -42,6 +42,11 @@
 </template>
 
 <script setup>
+import { ref, onMounted } from 'vue';
+import { useStore } from 'vuex';
+const form = ref(null);
+const store = useStore();
+onMounted(() => store.state.formTop = form.value.offsetTop)
 
 </script>
 
@@ -87,7 +92,13 @@
     /* 50.4px */
 }
 
-.form__img {}
+.form__img {
+    background-image: url('@/assets/shutterstock_bg.png');
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-position: center;
+    width: 100%;
+}
 
 .form__right {
     display: grid;

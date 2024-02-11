@@ -1,112 +1,64 @@
 <template>
-    <section class="filters">
+    <section class="filters" ref="filterSection" id="filters" @click="console.log(filterSection)">
         <div class="content__container">
             <div class="filters__filters">
                 <div class="filters__filter_name filters__filter">
-                    <div class="filter__title">Название курса</div>
-                    <input class="filter__input" type="search" placeholder="Поиск" v-model="courseTitle">
+                    <div class="filter__title">Название</div>
+                    <input class="filter__input" type="search" placeholder="Поиск" v-model="bookTitle">
                 </div>
+
+                <div class="filters__filter_author filters__filter">
+                    <div class="filter__title">Автор</div>
+                    <input class="filter__input" type="search" placeholder="Поиск" v-model="bookAuthor">
+                </div>
+
                 <div class="filters__filter_price filters__filter">
-                    <div class="filter__title">Стоимость</div>
+                    <div class="filter__title">Жанр</div>
                     <select class="filter__input" aria-placeholder="Выбрать из списка">
-                        <option disabled selected>Выбрать из списка</option>
-                        <option>1</option>
-                        <option>2</option>
+                        <option>Выбрать из списка</option>
+                        <option>Жанр 1</option>
+                        <option>Жанр 2</option>
                     </select>
                 </div>
 
                 <div class="filters__filter_type filters__filter">
-                    <div class="filter__title">Тип курса</div>
+                    <div class="filter__title">Тип</div>
                     <select class="filter__input" type="search">
                         <option>Выбрать из списка</option>
-                        <option>Повышение квалификации</option>
+                        <option>Тип 1</option>
+                        <option>Тип 2</option>
+                        <option>Тип 3</option>
                     </select>
                 </div>
                 <div class="filters__button_wrapper">
-                    <button class="filters__button" @click="emit('filterByTitle', courseTitle)">
+                    <button class="filters__button" @click="emit('filterByTitle', bookTitle, bookAuthor)">
                         Применить
                     </button>
                 </div>
             </div>
 
-            <div class="filters__sorted">
-                <div class="filters__sorting">
-                    <div class="sort__type" :class="{ 'sort_select': sortType == 1 }" @click="emit('sortByRating', sortKeyRating);
-                    sortKeyRating = sortKeyRating == -1 ? 1 : -1; sortType = 1">
-                        <p>По рейтингу</p>
-                        <img :src="arrows" class="sorting__arrows" v-if="sortKeyRating == -1">
-                        <img :src="arrows_back" class="sorting__arrows" v-else>
-                    </div>
-                    <div class="filters__line"></div>
-
-                    <div class="sort__type" :class="{ 'sort_select': sortType == 2 }" @click="emit('sortByRating', sortKeyRating);
-                    sortKeyRating = sortKeyRating == -1 ? 1 : -1; sortType = 2">
-                        <p>По рейтингу</p>
-                        <img :src="arrows" class="sorting__arrows" v-if="sortKeyRating == -1">
-                        <img :src="arrows_back" class="sorting__arrows" v-else>
-
-                    </div>
-                    <div class="filters__line line__adapt"></div>
-
-
-                    <div class="sort__type" :class="{ 'sort_select': sortType == 3 }" @click="emit('sortByPrice', sortKeyPrice);
-                    sortKeyPrice = sortKeyPrice == -1 ? 1 : -1; sortType = 3">
-                        <p>По цене</p>
-                        <img :src="arrows" class="sorting__arrows" v-if="sortKeyPrice == -1">
-                        <img :src="arrows_back" class="sorting__arrows" v-else>
-                    </div>
-                    <div class="filters__line"></div>
-
-                    <div class="sort__type" :class="{ 'sort_select': sortType == 4 }" @click="emit('sortByTime', sortKeyTime);
-                    sortKeyTime = sortKeyTime == -1 ? 1 : -1; sortType = 4">
-                        <p>По длительности</p>
-                        <img :src="arrows" class="sorting__arrows" v-if="sortKeyTime == -1">
-                        <img :src="arrows_back" class="sorting__arrows" v-else>
-                    </div>
-                </div>
-
-                <div class="filters__views" v-if="props.viewType" @click="emit('changeViewType')">
-                    <img class="views_list" :src="viewList">
-                    <img class="views_table" :src="viewTableSelect">
-                </div>
-                <div class="filters__views" v-else @click="emit('changeViewType')">
-                    <img class="views_list" :src="viewListSelect">
-                    <img class="views_table" :src="viewTable">
-                </div>
-
-
-            </div>
         </div>
     </section>
 </template>
 
 <script setup>
-import { ref } from 'vue';
-
-import arrows from '@/assets/arrows.svg';
-import arrows_back from '@/assets/arrows_back.svg';
-
-import viewList from '@/assets/list_sort.svg';
-import viewListSelect from '@/assets/list_sort_select.svg';
-import viewTable from '@/assets/table_sort.svg';
-import viewTableSelect from '@/assets/table_sort_select.svg';
+// eslint-disable-next-line
+import { ref, onMounted } from 'vue';
+import { useStore } from 'vuex';
 
 // eslint-disable-next-line
 const emit = defineEmits(['sortByRating', 'sortByPrice', 'sortByPrice', 'changeViewType', 'filterByTitle']);
 // eslint-disable-next-line
 const props = defineProps(['viewType']);
+// eslint-disable-next-line
+const store = useStore();
 
-let courseTitle = '';
+let bookTitle = '';
+let bookAuthor = '';
 
-const sortKeyRating = ref();
-sortKeyRating.value = -1;
-const sortKeyPrice = ref();
-sortKeyPrice.value = -1;
-const sortKeyTime = ref();
-sortKeyTime.value = -1;
+const filterSection = ref(null);
+onMounted(() => store.state.filterTop = filterSection.value.offsetTop);
 
-
-let sortType = 0;
 
 </script>
 

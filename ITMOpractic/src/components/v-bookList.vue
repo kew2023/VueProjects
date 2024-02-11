@@ -1,30 +1,30 @@
 <template>
-    <div :class="{ courses__list_list: !props.viewType, courses__list: props.viewType }">
-        <div :class="{ courses__item_list: !props.viewType, courses__item: props.viewType }"
-            v-for="course of props.coursesArr" :key="course.rating" @click="console.log(props)">
-            <div class="item__title">{{ course.title }}</div>
+    <div :class="{ books__list_list: !props.viewType, books__list: props.viewType }">
+        <div :class="{ books__item_list: !props.viewType, books__item: props.viewType }" v-for="book of props.booksArr"
+            :key="book.rating" @click="console.log(props)">
+            <div class="item__title">{{ book.title }}</div>
             <div class="item__info" :class="{ item__info_list: !props.viewType }">
                 <div class="info__item">
                     <img src="../assets/calendar.svg" alt="">
-                    <p>{{ course.date }}</p>
+                    <p>{{ book.date }}</p>
 
                 </div>
                 <div class="info__item">
                     <img src="../assets/alarm.svg" alt="">
-                    <p>{{ course.time + " " + printHour(course.time) }}</p>
+                    <p>{{ book.time + " " + printHour(book.time) }}</p>
                 </div>
                 <div class="info__item">
                     <img src="../assets/diplom.svg" alt="">
-                    <p>{{ course.doc }}</p>
+                    <p>{{ book.doc }}</p>
                 </div>
             </div>
             <div class="item__main" :class="{ item__main_list: !props.viewType }">
-                <img class="item__logo" :src="logoArr[course.rating - 1]">
+                <img class="item__logo" :src="booklogo">
                 <div class=" item__price">
-                    <img class="price__logo" src="../assets/wallet.svg" v-if="course.price">
-                    <div class="price__text"><span v-if="Array.isArray(course.price)">от {{ Math.min(...course.price) + "₽"
+                    <img class="price__logo" src="../assets/wallet.svg" v-if="book.price">
+                    <div class="price__text"><span v-if="Array.isArray(book.price)">от {{ Math.min(...book.price) + "₽"
                     }}</span>
-                        <span v-else>{{ course.price ? course.price + " ₽" : "Бесплатно" }}</span>
+                        <span v-else>{{ book.price ? book.price + " ₽" : "Бесплатно" }}</span>
                     </div>
                 </div>
             </div>
@@ -33,24 +33,12 @@
 </template>
 
 <script setup>
+import booklogo from "@/assets/bookLogo.svg";
 
-import logocourse_1 from "@/assets/logocourse_1.svg";
-import logocourse_2 from "@/assets/logocourse_2.svg";
-import logocourse_3 from "@/assets/logocourse_3.svg";
-import logocourse_4 from "@/assets/logocourse_4.svg";
-import logocourse_5 from "@/assets/logocourse_5.svg";
-import logocourse_6 from "@/assets/logocourse_6.svg";
-import logocourse_7 from "@/assets/logocourse_7.svg";
-import logocourse_8 from "@/assets/logocourse_8.svg";
-import logocourse_9 from "@/assets/logocourse_9.svg";
-
-const logoArr = [logocourse_1, logocourse_2, logocourse_3,
-    logocourse_4, logocourse_5, logocourse_6,
-    logocourse_7, logocourse_8, logocourse_9];
 
 // eslint-disable-next-line
 const props = defineProps({
-    coursesArr: {
+    booksArr: {
         type: Array,
     },
     viewType: {
@@ -74,20 +62,20 @@ function printHour (n) {
 </script>
 
 <style lang="css" scoped>
-.courses__list {
+.books__list {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     gap: 20px;
     margin-bottom: 60px;
 }
 
-.courses__list_list {
+.books__list_list {
     display: grid;
     gap: 20px;
     margin-bottom: 60px;
 }
 
-.courses__item {
+.books__item {
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -106,7 +94,7 @@ function printHour (n) {
     background: rgb(250, 250, 238);
 }
 
-.courses__item_list {
+.books__item_list {
     display: grid;
     grid-template-areas:
         "a c"
@@ -200,14 +188,14 @@ function printHour (n) {
 }
 
 @media (min-width: 2050px) {
-    .courses__item_list {
+    .books__item_list {
         display: grid;
         grid-template-columns: 1fr 1fr 1frs;
     }
 }
 
 @media (min-width: 2560px) {
-    .courses__list {
+    .books__list {
         grid-template-columns: 1fr 1fr 1fr 1fr;
     }
 
@@ -225,7 +213,7 @@ function printHour (n) {
 }
 
 @media (min-width: 3840px) {
-    .courses__list {
+    .books__list {
         grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
     }
 
@@ -258,7 +246,7 @@ function printHour (n) {
 @media (max-width: 1280px) {}
 
 @media (max-width: 1024px) {
-    .courses__list {
+    .books__list {
         grid-template-columns: 1fr 1fr;
     }
 }
@@ -280,7 +268,7 @@ function printHour (n) {
 }
 
 @media (max-width: 544px) {
-    .courses__item_list {
+    .books__item_list {
         grid-template-areas:
             "a"
             "b"
@@ -304,7 +292,7 @@ function printHour (n) {
 
 @media (max-width: 480px) {
 
-    .courses__list {
+    .books__list {
         grid-template-columns: 1fr;
         margin-bottom: 30px;
     }

@@ -1,24 +1,34 @@
 <template>
     <header class="header">
-        <a href="" style="text-decoration: none;">
+        <router-link to="/" style="text-decoration: none;">
             <div class="header__logo">
                 <img class="header__img" src="@/assets/logo.png">
-                <div class="header__title">УМКО</div>
+                <div class="header__title">Наша Библиотека</div>
             </div>
-        </a>
+        </router-link>
         <div class="header__buttons">
-            <a class="header__courses" href="" style="text-decoration: none"
-                @click.prevent.stop="win.scrollTo(0, courses.offsetTop)">Наши
-                курсы</a>
-            <button class="header__button">Написать нам</button>
+            <router-link to="/personalAccount" class="header__courses" href="" style="text-decoration: none">Личный
+                кабинет</router-link>
+            <a class="header__courses" href="" style="text-decoration: none">Бронь помещения</a>
+            <a class="header__courses" href="" style="text-decoration: none" @click.prevent="win.scrollTo({
+                top: store.getters.getFormTop,
+                behavior: 'smooth'
+            })">Заказать доставку</a>
+
+            <button class="header__button" @click="win.scrollTo({
+                top: store.getters.getFilterTop,
+                behavior: 'smooth'
+            })">Наши книги</button>
+
         </div>
     </header>
 </template>
 
 <script setup>
-// eslint-disable-next-line
-const props = defineProps(['courses']);
+import { useStore } from "vuex";
 
+// eslint-disable-next-line
+const store = useStore();
 const win = window;
 </script>
 
@@ -31,8 +41,9 @@ const win = window;
     justify-content: space-between;
     align-items: center;
     position: absolute;
-    left: 10%;
-    width: 77%;
+    box-sizing: border-box;
+    left: 7.5%;
+    width: 84%;
     height: 70px;
     flex-shrink: 0;
     border-radius: 0px 0px 16px 16px;
@@ -42,6 +53,7 @@ const win = window;
     backdrop-filter: blur(50px);
     padding-left: 20px;
     padding-right: 31px;
+    z-index: 1;
 }
 
 

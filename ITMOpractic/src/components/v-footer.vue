@@ -4,8 +4,8 @@
             <div class="footer__icons">
                 <a href="">
                     <div class="icons__umko">
-                        <img class="umko__logo" src="@/assets/footer_umko.svg">
-                        <div class="umko__text">УМКО</div>
+                        <img class="umko__logo" src="@/assets/logo_negative.png">
+                        <div class="umko__text">Наша Библиотека</div>
                     </div>
                 </a>
                 <div class="icons__list">
@@ -49,6 +49,7 @@
     font-size: 16px;
     font-weight: 500;
     line-height: 140%;
+    margin-top: auto;
     /* 22.4px */
 }
 
@@ -162,6 +163,12 @@
 .footer__policy,
 .footer__offer {
     text-align: start;
+}
+
+.footer__info,
+.footer__buttons,
+.footer__me {
+    margin-top: 10px;
 }
 
 

@@ -1,45 +1,51 @@
 <template>
-    <section class="ourcourses">
+    <section class="ourbooks">
         <div class="content__container">
-            <div class="ourcourses__info">
-                <div class="ourcourses__title">Наши курсы это</div>
-                <div class="ourcourses__list">
-                    <div class="ourcourses__item">
+            <div class="ourbooks__info">
+                <div class="ourbooks__title">Наша библиотека</div>
+                <div class="ourbooks__list">
+                    <div class="ourbooks__item">
                         <div class="item__number">1</div>
-                        <div class="item__text">Лучшие <b>наставники</b></div>
+                        <div class="item__text"><b>Интересные</b> книги</div>
                     </div>
-                    <div class="ourcourses__item">
+                    <div class="ourbooks__item">
                         <div class="item__number">2</div>
-                        <div class="item__text">Интересные <b>программы обучения</b></div>
+                        <div class="item__text">Возможность <b>доставки</b></div>
                     </div>
-                    <div class="ourcourses__item">
+                    <div class="ourbooks__item">
                         <div class="item__number">3</div>
-                        <div class="item__text">Передовые <b>технологии</b> и методы <b>обучения</b></div>
+                        <div class="item__text"><b>Бронирование</b> помещений</div>
                     </div>
                 </div>
-                <button class="ourcourses__button">
-                    <div class="button__left">Найти свой курс</div>
+                <button class="ourbooks__button" @click="win.scrollTo({
+                    top: store.getters.getFilterTop,
+                    behavior: 'smooth'
+                })">
+                    <div class="button__left">Начать читать</div>
                     <div class="button__right">
                         <img class="button__img_arrow" src="@/assets/arrow_right.svg">
                     </div>
                 </button>
             </div>
-            <img class="ourcourses__img" src="@/assets/shutterstock.png">
+            <img class="ourbooks__img" src="@/assets/woman_left.png">
         </div>
     </section>
 </template>
 
 <script setup>
+import { useStore } from 'vuex';
+const store = useStore();
+const win = window;
 
 </script>
 
 <style lang="css" scoped>
 /* Первая секция */
-.ourcourses {
+.ourbooks {
     display: flex;
     justify-content: center;
     width: 100%;
-    background-image: url("@/assets/bg_ourcourses.png");
+    background-image: url("@/assets/bg_ourbooks.png");
     background-size: cover;
     background-repeat: no-repeat;
     border-radius: 0px 0px 30px 30px;
@@ -52,12 +58,12 @@
     flex-direction: row;
 }
 
-.ourcourses__info {
+.ourbooks__info {
     padding-top: 166px;
 
 }
 
-.ourcourses__title {
+.ourbooks__title {
     color: #4B4A49;
     font-family: "Plovdiv Display";
     font-size: 70px;
@@ -67,11 +73,11 @@
     /* 70px */
 }
 
-.ourcourses__list {
+.ourbooks__list {
     margin-top: 27px;
 }
 
-.ourcourses__item {
+.ourbooks__item {
     display: flex;
     margin-bottom: 3px;
     align-items: center;
@@ -105,7 +111,7 @@
     /* 22.4px */
 }
 
-.ourcourses__button {
+.ourbooks__button {
     display: flex;
     margin-top: 45px;
     width: 270px;
@@ -136,20 +142,21 @@
     height: 48px;
 }
 
-.ourcourses__img {
+.ourbooks__img {
     margin-top: auto;
     margin-left: auto;
     padding-right: 65px;
     background-image: url('@/assets/shutterstock_bg.png');
     background-repeat: no-repeat;
-    background-size: 85%;
+    background-size: 100%;
     background-position: 100% 100%;
+    height: 90%;
 }
 
 
 @media (max-width: 1280px) {
 
-    .ourcourses__title {
+    .ourbooks__title {
         font-size: 62px;
     }
 }
@@ -160,7 +167,7 @@
         z-index: -1;
     }
 
-    .ourcourses__img {
+    .ourbooks__img {
         width: 45%;
         position: absolute;
         left: 50%;
@@ -175,11 +182,11 @@
         height: auto;
     }
 
-    .ourcourses__title {
+    .ourbooks__title {
         font-size: 48px;
     }
 
-    .ourcourses__img {
+    .ourbooks__img {
         width: 45%;
         position: absolute;
         left: 50%;
@@ -189,17 +196,17 @@
 }
 
 @media (max-width: 544px) {
-    .ourcourses__img {
+    .ourbooks__img {
         display: none;
     }
 }
 
 @media (max-width: 480px) {
-    .ourcourses__title {
+    .ourbooks__title {
         font-size: 36px;
     }
 
-    .ourcourses__item {
+    .ourbooks__item {
         margin-bottom: 10px;
     }
 
@@ -207,17 +214,17 @@
         font-size: 16px;
     }
 
-    .ourcourses__button {
+    .ourbooks__button {
         justify-content: center;
     }
 }
 
 @media (max-width: 320px) {
-    .ourcourses__title {
+    .ourbooks__title {
         font-size: 26px;
     }
 
-    .ourcourses__button {
+    .ourbooks__button {
         width: 100%;
     }
 }
