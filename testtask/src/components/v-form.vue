@@ -26,7 +26,8 @@
                     <input class="form__input input_big" placeholder="Введите текст">
                 </div>
                 <div class="form__checkbox">
-                    <input type="checkbox" name="" id="">
+                    <input type="checkbox" name="" id="form__checkbox">
+                    <label for="form__checkbox"></label>
                     <p>Согласие на обработку данных</p>
                 </div>
                 <button class="form__button">
@@ -104,7 +105,7 @@
     padding: 20px 30px 30px 20px;
     border-radius: 16px;
     background: #F3F3F3;
-    height: 80%;
+    height: 550px;
     margin-bottom: 40px;
 }
 
@@ -131,6 +132,36 @@
     grid-area: e;
 }
 
+.form__checkbox input {}
+
+/* Стилизация checkbox */
+#form__checkbox {
+    display: none;
+}
+
+#form__checkbox+label {
+    display: block;
+    width: 20px;
+    height: 20px;
+    background: #FFF;
+    text-align: center;
+    border-radius: 4px;
+}
+
+#form__checkbox+label:before {
+    content: '';
+}
+
+#form__checkbox:checked+label {
+    border: none
+}
+
+#form__checkbox:checked+label:before {
+    color: #4B4A49;
+    content: '✔';
+}
+
+
 .form__button {
     grid-area: f;
 }
@@ -139,7 +170,6 @@
 
 .form__title {
     color: #4B4A49;
-
     font-size: 14px;
     font-weight: 400;
     line-height: 140%;
@@ -157,6 +187,7 @@
     background: #FFF;
 
     position: relative;
+    border: none;
 }
 
 
@@ -168,7 +199,7 @@
 }
 
 .input_big {
-    height: 140px;
+    height: 160px;
 }
 
 .form__checkbox {

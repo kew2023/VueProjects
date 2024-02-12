@@ -4,8 +4,8 @@
         </Header>
 
         <main>
-            <Profile></Profile>
-            <router-view />
+            <Profile :user="userInfo"></Profile>
+            <router-view @edit="editUser()" />
 
         </main>
         <!--<nav>
@@ -81,15 +81,21 @@ main {
 </style>
 
 <script setup>
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import Header from "@/components/Header.vue";
 import Profile from "@/components/Profile.vue";
+import { useStore } from "vuex";
+
+
+const store = useStore();
 
 const userInfo = ref({
     rating: 0,
     reviews: 0,
     sales: 0,
     buy: 0,
+    name: computed(() => store.getters.getUserName),
+    description: computed(() => store.getters.getUserDiscription),
 });
 
 </script>

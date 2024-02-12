@@ -1,6 +1,6 @@
 <template lang="">
     <div class="main__container">
-        <div class="main__line"></div>
+        <div class="main__line" ></div>
         <div class="main__title" @click="() => { reviews.length = 0; countReviews = 0 }">Отзывы</div>
         <div class="main__author" v-if="reviews.length > 0">
             <div class="author__bar">
@@ -192,8 +192,6 @@ async function getPost (n) {
     color: rgb(0, 0, 0);
 }
 
-.main__reviews {}
-
 .main__noreviews {
     color: #FFF;
     font-size: 18px;
@@ -271,15 +269,17 @@ async function getPost (n) {
 }
 
 @media (max-width: 1279px) {
-    .main__container {
-        position: relative;
-        top: -20px;
+    .main__container {}
+
+    .main__title {
+        margin-top: 0px;
     }
 
     .main__line {
-        width: 75vw;
+        width: 77vw;
         position: absolute;
-        left: -236px;
+        left: 11.5%;
+        top: 155px;
     }
 
 }
@@ -290,10 +290,9 @@ async function getPost (n) {
     }
 
     .main__line {
-        width: 100%;
-        position: absolute;
-        left: 0px;
-        top: -122px;
+        width: 90%;
+        top: 285px;
+        left: 5%
     }
 
 }

@@ -177,7 +177,7 @@ header {
     }
 
     .header__info .info__item {
-        padding: 9px 15px;
+        padding: 8px 15px;
         border-radius: 10px;
         margin-bottom: 15px;
     }
@@ -198,6 +198,27 @@ header {
     .header__info .linebreak {
         display: block;
         width: 100%;
+    }
+}
+
+@media (max-width: 520px) {
+    .header__myprofile {
+        min-width: 120px;
+        font-size: 16px;
+    }
+
+    .header__info .info__item {
+        padding: 4px 8px;
+        border-radius: 10px;
+        margin-bottom: 15px;
+    }
+
+    .info__item p {
+        font-size: 10px;
+    }
+
+    .info__item span {
+        font-size: 12px;
     }
 }
 </style>

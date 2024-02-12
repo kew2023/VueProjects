@@ -1,4 +1,4 @@
-# wowproject
+# Тестовое задание 1T (союз.рф)
 
 ## Project setup
 ```

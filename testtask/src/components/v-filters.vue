@@ -30,9 +30,13 @@
             </div>
 
             <div class="filters__sorted">
-                <div class="filters__sorting">
-                    <div class="sort__type" :class="{ 'sort_select': sortType == 1 }" @click="emit('sortByRating', sortKeyRating);
-                    sortKeyRating = sortKeyRating == -1 ? 1 : -1; sortType = 1">
+                <mySelector v-if="win.innerWidth <= 544" @selectSort="(sort) => selectSort(sort)" :sortKeyArr="sortKeyArr"
+                    :sortType="sortType">
+                </mySelector>
+                <div class="filters__sorting" v-else>
+
+                    <div class="sort__type" :class="{ 'sort_select': sortType == 2 }" @click="emit('sortByRating', sortKeyRating);
+                    sortKeyRating = sortKeyRating == -1 ? 1 : -1; sortType = 2">
                         <p>По рейтингу</p>
                         <img :src="arrows" class="sorting__arrows" v-if="sortKeyRating == -1">
                         <img :src="arrows_back" class="sorting__arrows" v-else>
@@ -83,6 +87,8 @@
 <script setup>
 import { ref } from 'vue';
 
+import mySelector from '@/UI/mySelector.vue';
+
 import arrows from '@/assets/arrows.svg';
 import arrows_back from '@/assets/arrows_back.svg';
 
@@ -92,7 +98,7 @@ import viewTable from '@/assets/table_sort.svg';
 import viewTableSelect from '@/assets/table_sort_select.svg';
 
 // eslint-disable-next-line
-const emit = defineEmits(['sortByRating', 'sortByPrice', 'sortByPrice', 'changeViewType', 'filterByTitle']);
+const emit = defineEmits(['sortByRating', 'sortByPrice', 'sortByTime', 'changeViewType', 'filterByTitle']);
 // eslint-disable-next-line
 const props = defineProps(['viewType']);
 
@@ -105,8 +111,49 @@ sortKeyPrice.value = -1;
 const sortKeyTime = ref();
 sortKeyTime.value = -1;
 
+const sortKeyArr = [sortKeyRating, sortKeyPrice, sortKeyTime];
 
-let sortType = 0;
+
+const sortType = ref();
+sortType.value = 2;
+
+const win = window;
+
+
+function selectSort (sort) {
+    switch (sort) {
+        case 'sortRatingTop':
+            sortKeyRating.value = -1;
+            emit('sortByRating', sortKeyRating.value);
+            sortType.value = 2;
+            break;
+        case 'sortRatingBad':
+            sortKeyRating.value = 1;
+            emit('sortByRating', sortKeyRating.value);
+            sortType.value = 2;
+            break;
+        case 'sortPriceTop':
+            sortKeyPrice.value = -1;
+            emit('sortByPrice', sortKeyPrice.value);
+            sortType.value = 3;
+            break;
+        case 'sortPriceBad':
+            sortKeyPrice.value = 1;
+            emit('sortByPrice', sortKeyPrice.value);
+            sortType.value = 3;
+            break;
+        case 'sortTimeTop':
+            sortKeyTime.value = -1;
+            emit('sortByTime', sortKeyTime.value);
+            sortType.value = 4;
+            break;
+        case 'sortTimeBad':
+            sortKeyTime.value = 1;
+            emit('sortByTime', sortKeyTime.value);
+            sortType.value = 4;
+            break;
+    }
+}
 
 </script>
 
@@ -345,7 +392,7 @@ let sortType = 0;
 
 @media (max-width: 544px) {
     .filters__sorted {
-        height: 150px;
+        height: 100px;
         padding-left: 15%;
         padding-right: 15%;
     }

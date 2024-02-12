@@ -1,15 +1,18 @@
 <template lang="html5">
-    <div class="profile" @click.capture = "showMenu">
-        <div class="profile__header" >
-            <router-link to='/profile'>
-                <img class="profile__icon" src="../assets/icon.png" alt="Икон">
-            </router-link>
-            <div class="profile__info">
-                <p class="profile__name">Ivan_Mazepa</p>
-                <p class="profile__status" :class="{ 'online': online, 'offline': !online }" @click="online = !online; n = (n+1)%2 ">{{statusText[n]}}</p>
+    <div class="profile" >
+        <div class="profile__wrapper" @click.prevent = "showMenu">
+            <div class="profile__header" >
+                <router-link to='/profile'>
+                    <img class="profile__icon" src="../assets/icon.png" alt="Икон">
+                </router-link>
+                <div class="profile__info">
+                    <p class="profile__name">{{props.user.name}}</p>
+                    <p class="profile__status" :class="{ 'online': online, 'offline': !online }" @click="online = !online; n = (n+1)%2 ">{{statusText[n]}}</p>
+                </div>
             </div>
+            <p class="profile__description">{{props.user.description}}</p>
+            <i class="fa-solid fa-chevron-down profile__arrow" style="color:#7D7781; font-size: 18px;"></i>
         </div>
-        <p class="profile__description">Продажа голды WOW 24/7</p>
         <div class="linebreak"></div>
         <div class="profile__register" v-if="showMode">
             <div class="register__info">
@@ -27,16 +30,20 @@
     </div>
 </template>
 
-<script setup lang="js">
+<script setup>
 import { ref } from 'vue';
+
 let online = ref(true);
 let n = 0;
 const statusText = ['Онлайн', 'Офлайн'];
 let showMode = ref(true);
 
-async function showMenu () {
+const props = defineProps(['user']);
 
-    if (window.innerWidth < 1024) showMode = !showMode;
+function showMenu () {
+
+    if (window.innerWidth < 1024) showMode.value = !showMode.value;
+    else showMode.value = true;
 }
 
 
@@ -83,6 +90,10 @@ async function showMenu () {
     margin-bottom: 10px;
 }
 
+.profile__arrow {
+    display: none;
+}
+
 .profile__status {
     font-size: 12px;
     font-weight: 500;
@@ -125,7 +136,7 @@ async function showMenu () {
     color: #b42d2d;
     background-color: #b42d2d;
     margin-right: 10px;
-    box-shadow: 0px 0px 5px 4px rgba(41, 194, 38, 0.20);
+    box-shadow: 0px 0px 5px 4px rgba(194, 38, 38, 0.2);
 }
 
 .profile__description {
@@ -322,6 +333,13 @@ nav>.active {
         flex-wrap: wrap;
     }
 
+    .profile__wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+    }
+
     .profile__header {
         margin-bottom: 0px;
     }
@@ -336,9 +354,19 @@ nav>.active {
         word-wrap: break-word;
     }
 
+    .profile__arrow {
+        display: block;
+    }
+
+
+    .profile__register,
+    .profile__nav,
     .profile .linebreak {
         width: 100%;
     }
 
+    .nav__item {
+        width: 97%;
+    }
 }
 </style>
