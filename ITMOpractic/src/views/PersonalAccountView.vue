@@ -13,7 +13,7 @@
                 <ul>
                     <li>{{ `${user.surname} ${user.name} ${user.fathername}` }}</li>
                     <li>{{ user.email }}</li>
-                    <li>{{ phoneFormat(user.phone) }}</li>
+                    <li>{{ phoneFormat(user.phonenumber) }}</li>
                 </ul>
 
             </div>
@@ -23,34 +23,70 @@
             </div>
 
         </section>
-        <vOrders></vOrders>
+        <vOrders :orders="orderArr"></vOrders>
     </main>
     <main class="content__container verification__container" v-else>
         <div class="verification">
             <div class="verification__wrapper">
                 <div class="verification__block sign_in">
                     <p class="block__type">Вход</p>
+
                     <div class="block__item">
-                        <p class="block__title">email</p>
-                        <input type="text" class="block__input">
+
+                        <p class="block__title">email <span class="error" v-show="emailErrorSignIn">Ошибка ввода</span>
+                        </p>
+                        <input type="text" placeholder="lorem@mail.ru" class="block__input" v-model="emailSignIn">
+
                     </div>
                     <div class="block__item">
-                        <p class="block__title">password</p>
-                        <input type="text" class="block__input">
+                        <p class="block__title">password <span class="error" v-show="passwordErrorSignIn">Поле пусто</span>
+                        </p>
+                        <input type="text" placeholder="password" class="block__input" v-model="passwordSignIn">
                     </div>
-                    <button class="block__button">Войти</button>
+                    <button class="block__button" @click="SignIn()">Войти</button>
+
                 </div>
+                <div class="line"></div>
                 <div class="verification__block sign__up">
                     <p class="block__type">Регистрация</p>
                     <div class="block__item">
-                        <p class="block__title">email</p>
-                        <input type="text" class="block__input">
+                        <p class="block__title">email <span class="error" v-show="emailErrorSignUp">Ошибка ввода</span></p>
+                        <input type="text" placeholder="lorem@mail.ru" class="block__input" v-model="emailSignUp">
                     </div>
                     <div class="block__item">
-                        <p class="block__title">password</p>
-                        <input type="text" class="block__input">
+                        <p class="block__title">password <span class="error" v-show="passwordErrorSignUp">Ошибка</span>
+                        </p>
+                        <input type="text" placeholder="password (от 5 символов)" class="block__input"
+                            v-model="passwordSignUp">
                     </div>
-                    <button class="block__button">Зарегистрироваться</button>
+                    <div class="block__item">
+                        <p class="block__title">Фамилия <span class="error" v-show="surnameErrorSignUp">Ошибка</span>
+                        </p>
+                        <input type="text" placeholder="Фамилия" class="block__input" v-model="surnameSignUp">
+                    </div>
+                    <div class="block__item">
+                        <p class="block__title">Имя <span class="error" v-show="nameErrorSignUp">Ошибка</span>
+                        </p>
+                        <input type="text" placeholder="Имя" class="block__input" v-model="nameSignUp">
+                    </div>
+                    <div class="block__item">
+                        <p class="block__title">Отчетсво </p>
+                        <input type="text" placeholder="Отчетсво (необязательное поле)" class="block__input"
+                            v-model="fathernameSignUp">
+                    </div>
+                    <div class="block__item">
+                        <p class="block__title">Номер телефона <span class="error"
+                                v-show="phoneNumberErrorSignUp">Ошибка</span>
+                        </p>
+                        <input type="text" placeholder="+7-(***)-***-**-**" class="block__input"
+                            v-model="phoneNumberSignUp">
+                    </div>
+                    <div class="block__item">
+                        <p class="block__title">Дата рождения <span class="error" v-show="birthdayErrorSignUp">Ошибка</span>
+                        </p>
+                        <input type="date" placeholder="Дата рождения" class="block__input" v-model="birthdaySignUp">
+                    </div>
+                    <button class="block__button" @click="SignUp()">Зарегистрироваться</button>
                 </div>
             </div>
         </div>
@@ -67,35 +103,58 @@ import axios from 'axios';
 const store = useStore();
 
 let user = {};
-const userVerification = ref();
-userVerification.value = true;
 
 user = {
     name: 'Игорь',
     surname: 'Gorlov',
     fathername: 'Vitalevich',
     email: 'igorlov2604@gmail.com',
-    phone: '+79523096126',
-    rating: 5.0.toFixed(1)
+    phonenumber: '+79523096126',
+    rating: 5.0.toFixed(1),
+    cardid: 0,
 };
 
-const orderArr = ref([]);
+let emailSignIn = '';
+let passwordSignIn = '';
 
-async function getUser (password, email) {
-    try {
-        const url = `locahost:8080/?password=${password}&email=${email}`;
-        const response = await axios.get(url);
-        user = response.data;
-        userVerification.value = true;
-    } catch (error) {
-        console.error(error);
-        userVerification.value = false;
+let emailSignUp = '';
+let passwordSignUp = '';
+let nameSignUp = '';
+let surnameSignUp = '';
+let fathernameSignUp = '';
+let phoneNumberSignUp = '';
+let birthdaySignUp = '';
+
+const emailErrorSignIn = ref(false);
+const passwordErrorSignIn = ref(false);
+
+const emailErrorSignUp = ref(false);
+const passwordErrorSignUp = ref(false);
+const nameErrorSignUp = ref(false);
+const surnameErrorSignUp = ref(false);
+const phoneNumberErrorSignUp = ref(false);
+const birthdayErrorSignUp = ref(false);
+
+const orderArr = ref([]);
+orderArr.value = [
+    {
+        id: 1,
+        bookexemplarid: store.getters.getBookArr.slice(0, 3),
+        userid: 1,
+        orderdate: '20.02.2024'
+    },
+    {
+        id: 2,
+        bookexemplarid: store.getters.getBookArr.slice(3, 6),
+        userid: 1,
+        orderdate: '21.02.2024'
     }
-}
+];
+
 
 async function getOrders (userId) {
     try {
-        const url = `locahost:8080/?userid=${userId}`;
+        const url = `locahost:8080/library/orders?userid=${userId}`;
         const response = await axios.get(url);
         let orders = response.data;
         for (order of orders) {
@@ -108,7 +167,7 @@ async function getOrders (userId) {
 
 async function getBookExemplar (bookExemplarId) {
     try {
-        const url = `locahost:8080/?bookexemplarid=${bookExemplarId}`;
+        const url = `locahost:8080/library/bookex?id=${bookExemplarId}`;
         const response = await axios.get(url);
         let bookExemplar = response.data;
         bookExemplar.bookid = getBook(bookExemplar.bookid);
@@ -120,12 +179,12 @@ async function getBookExemplar (bookExemplarId) {
 
 async function getBook (bookId) {
     try {
-        const url = `locahost:8080/?bookid=${bookId}`;
+        const url = `locahost:8080/library/book?bookid=${bookId}`;
         const response = await axios.get(url);
         let book = response.data;
         book.publisherid = await getPublisher(book.publisherid);
         book.genreid = await getGenre(book.genreid);
-        book.booktypeid = await getBookType(book.booktypeid);
+        book.bookseriesid = await getBookSeries(book.bookseriesid);
         book.authors = await getAuthors(book.id);
         return book;
     } catch (error) {
@@ -135,7 +194,7 @@ async function getBook (bookId) {
 
 async function getPublisher (publisherId) {
     try {
-        const url = `locahost:8080/?publisherid=${publisherId}`;
+        const url = `locahost:8080/library/publisher?publisherid=${publisherId}`;
         const response = await axios.get(url);
         let publisher = response.data;
         return publisher;
@@ -146,7 +205,7 @@ async function getPublisher (publisherId) {
 
 async function getGenre (genreId) {
     try {
-        const url = `locahost:8080/?genreid=${genreId}`;
+        const url = `locahost:8080/library/genre?genreid=${genreId}`;
         const response = await axios.get(url);
         let genre = response.data;
         return genre;
@@ -155,12 +214,12 @@ async function getGenre (genreId) {
     }
 }
 
-async function getBookType (bookTypeId) {
+async function getBookSeries (bookSeriesId) {
     try {
-        const url = `locahost:8080/?booktypeid=${bookTypeId}`;
+        const url = `locahost:8080/?bookseriesid=${bookSeriesId}`;
         const response = await axios.get(url);
-        let bookType = response.data;
-        return bookType;
+        let bookSeries = response.data;
+        return bookSeries;
     } catch (error) {
         console.error(error);
     }
@@ -169,7 +228,7 @@ async function getBookType (bookTypeId) {
 
 async function getAuthors (bookTypeId) {
     try {
-        const url = `locahost:8080/?booktypeid=${bookTypeId}`;
+        const url = `locahost:8080/library/bookauthor?booktypeid=${bookTypeId}`;
         const response = await axios.get(url);
         let authors = response.data.authorid; // Массив id авторов
         authors = authors.map(authorId => getAuthorById(authorId));
@@ -182,10 +241,10 @@ async function getAuthors (bookTypeId) {
 
 async function getAuthorById (authorId) {
     try {
-        const url = `locahost:8080/?booktypeid=${authorId}`;
+        const url = `locahost:8080/library/author?booktypeid=${authorId}`;
         const response = await axios.get(url);
         let author = response.data; // Вся инфа по автору
-        return authors;
+        return author;
     } catch (error) {
         console.error(error);
     }
@@ -206,6 +265,76 @@ const phoneFormat = (s, plus = true) => {
     return phone.replace(/(\d{3})(\d{3})(\d{2})(\d{2})/g, `${startsWith}-($1)-$2-$3-$4`);
 };
 
+async function SignIn () {
+    let pattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+    if (!emailSignIn.match(pattern)) { emailErrorSignIn.value = true; return; }
+    else { emailErrorSignIn.value = false; };
+
+    if (!passwordSignIn) { passwordErrorSignIn.value = true; return; }
+    else { passwordErrorSignIn.value = false; }
+
+
+    try {
+        let url = `locahost:8080/library/veruser?email=${emailSignIn}&password=${passwordSignIn}`;
+        let response = await axios.get(url);
+        user = response.data;
+        store.state.userVerification = true;
+        getOrders(user.id);
+    } catch (error) {
+        console.error(error);
+        store.state.userVerification = false;
+    }
+}
+
+function SignUp () {
+
+    if (SignUpDataError()) return;
+
+    axios.post({
+        url: `locahost:8080/library/users`,
+        data: {
+            name: nameSignUp,
+            surname: surnameSignUp,
+            fathername: fathernameSignUp,
+            phonenumber: phoneNumberSignUp,
+            email: emailSignUp,
+            password: passwordSignUp,
+            birthday: birthdaySignUp,
+            rating: 5,
+            cardid: 0,
+        }
+    })
+        .catch(function (error) {
+            console.log(error);
+        });
+}
+
+function SignUpDataError () {
+    let error = false;
+    let patternEmail = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+    if (!emailSignUp.match(patternEmail)) { emailErrorSignUp.value = true; error = true; }
+    else { emailErrorSignUp.value = false; };
+
+    if (passwordSignUp.length < 5) { passwordErrorSignUp.value = true; error = true; }
+    else { passwordErrorSignUp.value = false; }
+
+    if (nameSignUp.length < 5) { nameErrorSignUp.value = true; error = true; }
+    else { nameErrorSignUp.value = false; }
+
+    if (!surnameSignUp) { surnameErrorSignUp.value = true; error = true; }
+    else { nameErrorSignUp.value = false; }
+
+    if (!phoneNumberSignUp) { phoneNumberErrorSignUp.value = true; error = true; }
+    else { phoneNumberErrorSignUp.value = false; }
+
+    if (!birthdaySignUp) { birthdayErrorSignUp.value = true; error = true; }
+    else { birthdayErrorSignUp.value = false; }
+
+    return error;
+}
+
+
+
 </script>
 
 <style lang="css" scoped>
@@ -216,10 +345,15 @@ const phoneFormat = (s, plus = true) => {
 
 .content__container {
     margin-top: 100px;
+    min-height: calc(100vh - 160px - 276px + 60px);
+    margin-bottom: 60px;
 }
 
-.verification__container {
-    height: calc(100vh - 160px - 276px + 60px);
+
+.line {
+    height: 100%;
+    width: 1px;
+    background: rgba(0, 0, 0, 0.1);
 }
 
 .personal {
@@ -246,6 +380,9 @@ const phoneFormat = (s, plus = true) => {
     gap: 16px
 }
 
+.personal__info li {
+    font-size: 16px;
+}
 
 
 .personal__rating {
@@ -269,12 +406,52 @@ const phoneFormat = (s, plus = true) => {
 
 .verification__wrapper {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1px 1fr;
 }
 
 .verification__block {
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+.block__type {
+    font-size: 30px;
+    font-size: bold;
+    margin-bottom: 50px;
+}
+
+.block__item {
+    width: 50%;
+    margin-bottom: 15px;
+}
+
+.block__title {
+    margin-bottom: 5px;
+    display: flex;
+}
+
+.error {
+    display: inline-block;
+    color: red;
+    margin-left: auto;
+}
+
+.block__input {
+    width: 100%;
+    padding: 5px;
+    padding-left: 15px;
+    border-radius: 15px;
+    box-sizing: border-box;
+}
+
+.block__input::placeholder {}
+
+.block__button {
+    background: rgba(255, 145, 0, 0.137);
+    padding: 10px;
+    width: 200px;
+    font-weight: bold;
+    border-radius: 20px;
 }
 </style>

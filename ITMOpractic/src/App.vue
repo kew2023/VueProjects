@@ -37,6 +37,11 @@ button {
     display: block;
     border: none;
     background: none;
+    transition-duration: 0.1s;
+}
+
+button:active {
+    transform: scale(1.1);
 }
 
 a {

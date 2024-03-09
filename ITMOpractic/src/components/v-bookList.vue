@@ -1,31 +1,30 @@
 <template>
-    <div :class="{ books__list_list: !props.viewType, books__list: props.viewType }">
-        <div :class="{ books__item_list: !props.viewType, books__item: props.viewType }" v-for="book of props.booksArr"
-            :key="book.rating" @click="console.log(props)">
-            <div class="item__title">{{ book.title }}</div>
-            <div class="item__info" :class="{ item__info_list: !props.viewType }">
+    <div class="books__list">
+        <div class="books__item" v-for="book of props.booksArr" :key="book.rating" @click="console.log(props)">
+            <div class="item__title">{{ book.name }}</div>
+            <div class="item__info">
                 <div class="info__item">
-                    <img src="../assets/calendar.svg" alt="">
-                    <p>{{ book.date }}</p>
+                    <p>Автор: </p>
+                    <p>{{ book.author }}</p>
 
                 </div>
                 <div class="info__item">
-                    <img src="../assets/alarm.svg" alt="">
-                    <p>{{ book.time + " " + printHour(book.time) }}</p>
+                    <p>Издатель: </p>
+                    <p>{{ book.publisher }}</p>
                 </div>
                 <div class="info__item">
-                    <img src="../assets/diplom.svg" alt="">
-                    <p>{{ book.doc }}</p>
+                    <p>Жанр: </p>
+                    <p>{{ book.genry }}</p>
+                </div>
+                <div class="info__item">
+                    <p>Тип: </p>
+                    <p>{{ book.type }}</p>
                 </div>
             </div>
-            <div class="item__main" :class="{ item__main_list: !props.viewType }">
+            <div class="item__main">
                 <img class="item__logo" :src="booklogo">
-                <div class=" item__price">
-                    <img class="price__logo" src="../assets/wallet.svg" v-if="book.price">
-                    <div class="price__text"><span v-if="Array.isArray(book.price)">от {{ Math.min(...book.price) + "₽"
-                    }}</span>
-                        <span v-else>{{ book.price ? book.price + " ₽" : "Бесплатно" }}</span>
-                    </div>
+                <div class=" item__price" v-if="!props.exampl">
+                    <div class="price__text"> Кол-во {{ book.circulation }} </div>
                 </div>
             </div>
         </div>
@@ -35,30 +34,8 @@
 <script setup>
 import booklogo from "@/assets/bookLogo.svg";
 
-
 // eslint-disable-next-line
-const props = defineProps({
-    booksArr: {
-        type: Array,
-    },
-    viewType: {
-        type: Boolean,
-    }
-});
-
-function printHour (n) {
-    const words = ['час', 'часа', 'часов'];
-    let newn = n % 100;
-    if (newn > 19) newn = newn % 10;
-    switch (newn) {
-        case 0: return words[2];
-        case 1: return words[0];
-        case 2: return words[1];
-        case 3: return words[1];
-        case 4: return words[1];
-        default: return words[2];
-    }
-}
+const props = defineProps(['booksArr', 'exampl']);
 </script>
 
 <style lang="css" scoped>
@@ -128,7 +105,7 @@ function printHour (n) {
     margin-top: auto;
     grid-area: b;
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
     gap: 16px;
     align-items: center;
 }

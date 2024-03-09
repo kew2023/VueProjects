@@ -2,12 +2,12 @@
     <footer class="footer">
         <div class="content__container">
             <div class="footer__icons">
-                <a href="">
+                <router-link to="/" @click="win.scroll(0, 0)">
                     <div class="icons__umko">
                         <img class="umko__logo" src="@/assets/logo_negative.png">
                         <div class="umko__text">Наша Библиотека</div>
                     </div>
-                </a>
+                </router-link>
                 <div class="icons__list">
                     <a href=""><img class="footer__icon" src="@/assets/youtube.svg"></a>
                     <a href=""><img class="footer__icon" src="@/assets/telegram.svg"></a>
@@ -31,7 +31,7 @@
 </template>
 
 <script setup>
-
+const win = window;
 </script>
 
 <style lang="css" scoped>

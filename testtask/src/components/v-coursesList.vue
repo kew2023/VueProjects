@@ -1,7 +1,7 @@
 <template>
     <div :class="{ courses__list_list: !props.viewType, courses__list: props.viewType }">
         <div :class="{ courses__item_list: !props.viewType, courses__item: props.viewType }"
-            v-for="course of props.coursesArr" :key="course.rating" @click="console.log(props)">
+            v-for="course of props.coursesArr" :key="course.rating">
             <div class="item__title">{{ course.title }}</div>
             <div class="item__info" :class="{ item__info_list: !props.viewType }">
                 <div class="info__item">
@@ -226,16 +226,13 @@ function printHour (n) {
 
 @media (min-width: 3840px) {
     .courses__list {
-        grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
     }
 
     .item__title {
         font-size: 30px;
     }
 
-    .item__info {
-        grid-template-columns: 1fr 1fr 1fr;
-    }
 
     .info__item {
         justify-content: center;
