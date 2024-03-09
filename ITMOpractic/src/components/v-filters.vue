@@ -1,5 +1,5 @@
 <template>
-    <section class="filters" ref="filterSection" id="filters" @click="console.log(filterSection)">
+    <section class="filters">
         <div class="content__container">
             <div class="filters__filters">
                 <div class="filters__filter_name filters__filter">
@@ -16,7 +16,9 @@
                     <div class="filter__title">Жанр</div>
                     <select class="filter__input" aria-placeholder="Выбрать из списка">
                         <option>Выбрать из списка</option>
-                        <option>Жанр 1</option>
+                        <option v-for="genry of store.getters.getGenryArr" :key="store.state.genryArr.indexOf(genry)">{{
+                            genry }}
+                        </option>
                         <option>Жанр 2</option>
                     </select>
                 </div>
@@ -31,7 +33,7 @@
                     </select>
                 </div>
                 <div class="filters__button_wrapper">
-                    <button class="filters__button" @click="emit('filterByTitle', bookTitle, bookAuthor)">
+                    <button class="filters__button" @click="emit('filter', [bookTitle, bookAuthor])">
                         Применить
                     </button>
                 </div>
@@ -42,23 +44,13 @@
 </template>
 
 <script setup>
-// eslint-disable-next-line
-import { ref, onMounted } from 'vue';
+/* eslint-disable */
 import { useStore } from 'vuex';
-
-// eslint-disable-next-line
-const emit = defineEmits(['sortByRating', 'sortByPrice', 'sortByPrice', 'changeViewType', 'filterByTitle']);
-// eslint-disable-next-line
-const props = defineProps(['viewType']);
-// eslint-disable-next-line
+const emit = defineEmits(['filter']);
 const store = useStore();
 
 let bookTitle = '';
 let bookAuthor = '';
-
-const filterSection = ref(null);
-onMounted(() => store.state.filterTop = filterSection.value.offsetTop);
-
 
 </script>
 

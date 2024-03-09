@@ -3,31 +3,31 @@
         <div class="content__container">
             <div class="form__left">
                 <div class="form__text">
-                    Не хочешь идти? <br>
-                    Доставим!
+                    У вас мероприятие? <br>
+                    Скорее бронируй помещение!
                 </div>
                 <img class="form__img" src="@/assets/woman_right.png">
             </div>
             <div class="form__right">
                 <div class="form__item">
                     <div class="form__title">ФИО</div>
-                    <input class="form__input" placeholder="" type="text" maxlenght="40">
+                    <input class="form__input" placeholder="ФИО" type="text" maxlenght="40">
                 </div>
                 <div class="form__item">
-                    <div class="form__title">Номер телефона</div>
-                    <input class="form__input" placeholder="+7-(___)-___-__-__">
+                    <div class="form__title">Тип мероприятия</div>
+                    <input class="form__input" placeholder="Тип">
                 </div>
                 <div class="form__item">
-                    <div class="form__title">Email</div>
-                    <input class="form__input" placeholder="+7-(___)-___-__-__" type="email">
+                    <div class="form__title">Дата и время</div>
+                    <input class="form__input" placeholder="Дата и время" type="">
                 </div>
                 <div class="form__item">
-                    <div class="form__title">Вопрос</div>
+                    <div class="form__title">Кол-во людей</div>
+                    <input class="form__input" placeholder="Кол-во" type="number">
+                </div>
+                <div class="form__item">
+                    <div class="form__title">Комментарии</div>
                     <input class="form__input input_big" placeholder="Введите текст">
-                </div>
-                <div class="form__checkbox">
-                    <input type="checkbox" name="" id="">
-                    <p>Согласие на обработку данных</p>
                 </div>
                 <button class="form__button">
                     <div class=" button__left">Отправить
@@ -108,7 +108,8 @@ onMounted(() => store.state.formTop = form.value.offsetTop)
         "d d"
         "d d"
         "e e"
-        "f f";
+        "f f"
+        "g g";
     grid-template-columns: 1fr 1fr;
     column-gap: 30px;
     row-gap: 20px;
@@ -138,12 +139,16 @@ onMounted(() => store.state.formTop = form.value.offsetTop)
     grid-area: d;
 }
 
-.form__checkbox {
+.form__item:nth-child(5) {
     grid-area: e;
 }
 
-.form__button {
+.form__checkbox {
     grid-area: f;
+}
+
+.form__button {
+    grid-area: g;
 }
 
 .form__item {}

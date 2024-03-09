@@ -7,29 +7,25 @@
             </div>
         </router-link>
         <div class="header__buttons">
-            <router-link to="/personalAccount" class="header__courses" href="" style="text-decoration: none">Личный
-                кабинет</router-link>
-            <a class="header__courses" href="" style="text-decoration: none">Бронь помещения</a>
-            <a class="header__courses" href="" style="text-decoration: none" @click.prevent="win.scrollTo({
-                top: store.getters.getFormTop,
-                behavior: 'smooth'
-            })">Заказать доставку</a>
+            <router-link to="/basket" class="header__courses">Корзина</router-link>
 
-            <button class="header__button" @click="win.scrollTo({
-                top: store.getters.getFilterTop,
-                behavior: 'smooth'
-            })">Наши книги</button>
+            <router-link to="/personalAccount" class="header__courses" href="" style="text-decoration: none">
 
+                <button class="header__button">
+                    Личный кабинет
+                </button>
+
+            </router-link>
         </div>
     </header>
 </template>
 
 <script setup>
+
 import { useStore } from "vuex";
 
 // eslint-disable-next-line
 const store = useStore();
-const win = window;
 </script>
 
 

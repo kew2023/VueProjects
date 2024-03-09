@@ -17,10 +17,7 @@
                         <div class="item__text"><b>Бронирование</b> помещений</div>
                     </div>
                 </div>
-                <button class="ourbooks__button" @click="win.scrollTo({
-                    top: store.getters.getFilterTop,
-                    behavior: 'smooth'
-                })">
+                <button class="ourbooks__button">
                     <div class="button__left">Начать читать</div>
                     <div class="button__right">
                         <img class="button__img_arrow" src="@/assets/arrow_right.svg">
@@ -33,9 +30,6 @@
 </template>
 
 <script setup>
-import { useStore } from 'vuex';
-const store = useStore();
-const win = window;
 
 </script>
 
