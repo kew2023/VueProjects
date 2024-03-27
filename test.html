@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Popup Form</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+
+        #popup-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #popup {
+            background-color: white;
+            max-width: 500px;
+            padding: 20px;
+            border-radius: 8px;
+            position: relative;
+        }
+
+        .popup-close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .form-group input {
+            width: calc(50% - 10px);
+            margin-right: 10px;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .form-group input:last-child {
+            margin-right: 0;
+        }
+
+        .form-group input[type="submit"] {
+            width: 100%;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        @media (max-width: 600px) {
+            .form-group input {
+                width: 100%;
+                margin-right: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <button id="start-button">Начать</button>
+
+    <div id="popup-overlay">
+        <div id="popup">
+            <span class="popup-close">&times;</span>
+            <h2>Введите данные:</h2>
+            <form id="popup-form">
+                <div class="form-group">
+                    <label for="field1">Поле 1:</label>
+                    <input type="text" id="field1" name="field1">
+                </div>
+                <div class="form-group">
+                    <label for="field2">Поле 2:</label>
+                    <input type="text" id="field2" name="field2">
+                </div>
+                <div class="form-group">
+                    <label for="field3">Поле 3:</label>
+                    <input type="text" id="field3" name="field3">
+                </div>
+                <div class="form-group">
+                    <label for="field4">Поле 4:</label>
+                    <input type="text" id="field4" name="field4">
+                </div>
+                <div class="form-group">
+                    <label for="field5">Поле 5:</label>
+                    <input type="text" id="field5" name="field5">
+                </div>
+                <input type="submit" value="Отправить">
+            </form>
+        </div>
+    </div>
+
+    <div id="output"></div>
+
+    <script>
+        const startButton = document.getElementById('start-button');
+        const popupOverlay = document.getElementById('popup-overlay');
+        const popupClose = document.querySelector('.popup-close');
+        const popupForm = document.getElementById('popup-form');
+        const output = document.getElementById('output');
+
+        startButton.addEventListener('click', () => {
+            popupOverlay.style.display = 'flex';
+        });
+
+        popupClose.addEventListener('click', () => {
+            popupOverlay.style.display = 'none';
+        });
+
+        popupOverlay.addEventListener('click', (event) => {
+            if (event.target === popupOverlay) {
+                popupOverlay.style.display = 'none';
+            }
+        });
+
+        popupForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+            const formData = new FormData(popupForm);
+            const formValues = {};
+            for (let [key, value] of formData.entries()) {
+                formValues[key] = value;
+            }
+            output.innerHTML = JSON.stringify(formValues, null, 2);
+            popupOverlay.style.display = 'none';
+        });
+    </script>
+
+</body>
